@@ -1,33 +1,28 @@
-div {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    justify-content: center;
+
+.popup{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+/* adjust to match design */
+  overflow: hidden;
+  background: #1a1a1a;
 }
-  
-img {
-    width: 200px;
-    height: 200px;
+
+.popup::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 15px rgba(98, 85, 245, 0.385),   /* vivid inner rim */
+    inset 0 0 30px rgba(98, 85, 245, 0.388),  /* soft fill */
+    0 0 30px rgba(147, 51, 255, 0.08);         /* faint outer bloom */
+  z-index: 10;
 }
-  
-h1 {
-    font-size: 18px;
-    color: white;
-    font-weight: bold;
-    margin: 0;
+
+.popup > * {
+  position: relative;
+  z-index: 1;
 }
-  
-p {
-    color: white;
-    opacity: 0.7;
-    margin: 0;
-}
-  
-code {
-    font-size: 12px;
-    padding: 2px 4px;
-    background-color: #ffffff24;
-    border-radius: 2px;
-}
+

@@ -10,13 +10,16 @@
   "dependencies": {
     "@danielxceron/youtube-transcript": "^1.2.3",
     "@tailwindcss/vite": "^4.1.16",
+    "lucide-react": "^0.547.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.4",
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.0.0",
+    "vite-plugin-svgr": "^4.5.0",
     "vite-plugin-web-extension": "^4.0.0",
     "webextension-polyfill": "^0.10.0"
   }
