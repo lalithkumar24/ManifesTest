@@ -7,7 +7,7 @@ export default function() {
   }, []);
 
   return (
-    <div>
+    <div className='bg-yellow-50'>
       <img src="/icon-with-shadow.svg" />
      <h1>Hi</h1> 
     </div>

@@ -10,7 +10,7 @@
     "128": "icon/128.png"
   },
   "action": {
-    "default_popup": "src/popup.html"
+    "default_popup": "src/index.html"
   },
   "background": {
     "service_worker": "src/background.js"
