@@ -1,0 +1,28 @@
+
+.popup{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+/* adjust to match design */
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+.popup::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 15px rgba(98, 85, 245, 0.385),   /* vivid inner rim */
+    inset 0 0 30px rgba(98, 85, 245, 0.388),  /* soft fill */
+    0 0 30px rgba(147, 51, 255, 0.08);         /* faint outer bloom */
+  z-index: 10;
+}
+
+.popup > * {
+  position: relative;
+  z-index: 1;
+}
+

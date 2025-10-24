@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import webExtension, { readJsonFile } from "vite-plugin-web-extension";
 import tailwindcss from '@tailwindcss/vite'
-
+import svgr from "vite-plugin-svgr";
 
 function generateManifest() {
   const manifest = readJsonFile("src/manifest.json");
@@ -20,6 +20,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    svgr(),
     webExtension({
       manifest: generateManifest,
     }),
