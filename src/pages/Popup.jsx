@@ -7,9 +7,9 @@ export default function() {
   }, []);
 
   return (
-    <div className='bg-yellow-50'>
+    <div className='bg-[#1A1A1A] rounded-2xl'>
       <img src="/icon-with-shadow.svg" />
      <h1>Hi</h1> 
     </div>
   )
-}
+} 
