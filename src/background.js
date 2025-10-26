@@ -1,9 +1,5 @@
-import browser from "webextension-polyfill";
-import { YoutubeTranscript } from "@danielxceron/youtube-transcript";
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+import browser from "webextension-polyfill"; 
+import { YouTubeTranscriptApi } from "youtube-transcript-api";
 console.log("Hello from the background!");
 
 browser.runtime.onInstalled.addListener((details) => {
@@ -11,24 +7,18 @@ browser.runtime.onInstalled.addListener((details) => {
 });
 
 async function fetchTranscript(videoId) {
-  if (!videoId) {
-    console.error("Video id was not provided");
-    return;
-  }
-
+  const api = new YouTubeTranscriptApi();
   try {
-    delay(2900)
-    const transcript = YoutubeTranscript.fetchTranscript(videoId).then(console.log);
-    console.log(transcript);
-    return transcript;
-    if(transcript.length <= 0){
-      console.warn("There was no transcript found");
-      
-    }
+    const transcript = await api.fetch(videoId); // Rick Roll video
+    console.log('Transcript snippets:');
+    transcript.snippets.forEach(snippet => {
+      console.log(`[${snippet.start}s] ${snippet.text}`);
+    });
   } catch (error) {
-    console.error("Error fetching transcript:", error);
+    console.error('Error:', error.message);
   }
 }
+
 
 browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.url) {
