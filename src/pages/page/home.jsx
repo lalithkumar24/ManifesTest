@@ -4,11 +4,11 @@ import { Clock, Settings, Plus, Search, FilePlus } from 'lucide-react';
 function Home() {
   return (
     <div className='w-full h-screen bg-[#1A1A1A] flex justify-between flex-col'>
-      <div className='flex justify-between items-center px-4 pt-4 pb-2'>
+      <div className='flex justify-between items-center px-4 pt-4 pb-1'>
         <button className='w-10 h-10 flex items-center justify-center hover:bg-[#2A2A2A] rounded-lg transition-colors'>
           <Clock className='w-5 h-5 text-gray-400' />
         </button>
-        <h1 className="text-[14px] md:text-3xl text-neutral-200">
+        <h1 className="text-[16px] items-center justify-center md:text-3xl text-neutral-200">
           Manifes<span className='font-bold italic text-md text-yellow-400'>T</span><span className=' text-yellow-400'>est</span>
         </h1>
         <button className='w-10 h-10 flex items-center justify-center hover:bg-[#2A2A2A] rounded-lg transition-colors'>
