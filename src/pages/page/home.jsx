@@ -4,22 +4,21 @@ import { Clock, Settings, Plus, Search, FilePlus } from 'lucide-react';
 function Home() {
   return (
     <div className='w-full h-screen bg-[#1A1A1A] flex justify-between flex-col'>
-      {/* Header section */}
-      <div className='flex justify-between items-center px-6 pt-4 pb-2'>
+      <div className='flex justify-between items-center px-4 pt-4 pb-2'>
         <button className='w-10 h-10 flex items-center justify-center hover:bg-[#2A2A2A] rounded-lg transition-colors'>
-          <Clock className='w-6 h-6 text-gray-400' />
+          <Clock className='w-5 h-5 text-gray-400' />
         </button>
         <h1 className="text-[14px] md:text-3xl text-neutral-200">
           Manifes<span className='font-bold italic text-md text-yellow-400'>T</span><span className=' text-yellow-400'>est</span>
         </h1>
         <button className='w-10 h-10 flex items-center justify-center hover:bg-[#2A2A2A] rounded-lg transition-colors'>
-          <Settings className='w-6 h-6 text-gray-400' />
+          <Settings className='w-5 h-5 text-gray-400' />
         </button>
       </div>
       <div className='pt-1'>
-        <div className="px-8">
+        <div className="px-7">
           <h1 className="text-[14px] md:text-3xl text-neutral-300">
-            Open a Video or Webpage to Create a Test
+            Open a File or Webpage to Create a Test
           </h1>
           <p className="text-xs md:text-sm font-light text-neutral-500">
             No relevant content was found on this site.
@@ -43,7 +42,7 @@ function Home() {
 
       <div className='w-full flex justify-center pb-4 px-4 shrink-0'>
         <div className='w-full max-w-2xl'>
-          <div className='rounded-xl px-2 py-2  bg-[#202020] border border-[#3A3A3A] flex flex-col gap-1'>
+          <div className='rounded-xl px-2 py-2  bg-[#202020] border border-[#3d3d3d] flex flex-col gap-1'>
             {/* Text input on top */}
             <input
               type="text"
