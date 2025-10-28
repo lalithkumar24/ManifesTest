@@ -1,5 +1,4 @@
 import browser from "webextension-polyfill";
-import { YoutubeTranscript } from "@danielxceron/youtube-transcript";
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -10,49 +9,53 @@ browser.runtime.onInstalled.addListener((details) => {
   console.log("Extension installed:", details);
 });
 
-async function fetchTranscript(videoId) {
-  if (!videoId) {
-    console.error("Video id was not provided");
-    return;
-  }
 
-  try {
-    delay(2900)
-    const transcript = YoutubeTranscript.fetchTranscript(videoId).then(console.log);
-    console.log(transcript);
-    return transcript;
-    if(transcript.length <= 0){
-      console.warn("There was no transcript found");
-      
-    }
-  } catch (error) {
-    console.error("Error fetching transcript:", error);
-  }
-}
+browser.runtime.onMessage.addListener(async (messagee) => {
 
-browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete" && tab.url) {
+  if (messagee.message === "pageContent") {
+    console.log(messagee.content);
+
+    const formatPrompt = `
+      I will provide you with the content of a webpage. Extract only the main content of the page, ignoring navigation menus, headers, footers, ads, and unrelated links. 
+      1. Give the title of the page.
+      2. Present the main content in clean, readable format.
+      3. Keep lists, headings, and code blocks intact.
+      4. Remove any unrelated content like "Sign In", "Explore", "Follow", company info, or other menus.
+      Webpage content:
+      ${messagee.content} 
+    `;
+
     try {
-      const url = new URL(tab.url);
-      const hostname = url.hostname;
-      const pathname = url.pathname;
+      const session = await LanguageModel.create({
+        systemPrompt: "You are content formater for a large company website. You are given the content of a webpage and you need to format it."
+      });
 
-      if ((hostname === "www.youtube.com" || hostname === "m.youtube.com") && pathname === "/watch") {
-        const videoId = url.searchParams.get("v");
-        if (videoId) {
-          console.log("User has loaded a YouTube video:", videoId);
-          const transcript = await fetchTranscript(videoId);
-          if (transcript) {
-            browser.tabs.sendMessage(tabId, { type: "transcript", transcript: transcript });
-          }
-        }
+      const stream = await session.promptStreaming(formatPrompt);
+      
+      let formattedPageContent = '';
+
+      for await (const chunk of stream) {
+        formattedPageContent += chunk;
+        console.log(chunk); 
       }
+      
+      browser.runtime.sendMessage({
+        type: "FormattedContent",
+        content: formattedPageContent
+      });
+
+      console.log('Final Formatted Content:', formattedPageContent);
+      
     } catch (error) {
-       console.error("Error in onUpdated listener:", error);
+      console.error('AI Prompt API Error:', error);
+      browser.runtime.sendMessage({
+        type: "Error",
+        content: "Failed to process content with AI: " + error.message
+      });
     }
   }
 });
 
-chrome.action.onClicked.addListener((tab) => {
-  chrome.tabs.sendMessage(tab.id, { action: 'togglePopup' });
+browser.action.onClicked.addListener((tab) => {
+  browser.tabs.sendMessage(tab.id, { action: 'togglePopup' });
 });
