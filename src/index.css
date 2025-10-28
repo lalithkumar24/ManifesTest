@@ -1,15 +1,36 @@
 @import "tailwindcss";
+
+@theme {
+  /* single values */
+  --color-Mpurple: #968EF3;
+  --color-text: #0D0D0D;
+  --color-border-grey: #4C4C4C;
+
+  /* a small scale (optional) */
+  --color-softCoral-100: #FFE9E9;
+  --color-softCoral-500: #FF6B6B;
+
+  /* your brutalistic palette (example) */
+  --color-mutedOlive: #A3B18A;
+  --color-warmBeige: #EADBC8;
+  --color-coolMint: #A8DADC;
+  --color-midnight: #1D3557;
+}
+
+/* You can still add regular CSS layers here if needed */
+@layer base {
+  html { color: var(--color-text); background: var(--color-background); }
+}
+
 html,
 body {
-  width: 375px;
-  min-height: 400px;
   max-height: fit-content;
   padding: 0;
   margin: 0;
+  overflow: auto;
 }
 
 body {
   background-color: rgb(36, 36, 36);
-  height: 100%;
-  overflow-y: auto;
 }
+
