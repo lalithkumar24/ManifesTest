@@ -30,14 +30,7 @@ browser.runtime.onMessage.addListener(async (messagee) => {
         systemPrompt: "You are content formater for a large company website. You are given the content of a webpage and you need to format it."
       });
 
-      const stream = await session.promptStreaming(formatPrompt);
-      
-      let formattedPageContent = '';
-
-      for await (const chunk of stream) {
-        formattedPageContent += chunk;
-        console.log(chunk); 
-      }
+      const formattedPageContent = await session.prompt(formatPrompt);
       
       browser.runtime.sendMessage({
         type: "FormattedContent",
@@ -51,6 +44,31 @@ browser.runtime.onMessage.addListener(async (messagee) => {
       browser.runtime.sendMessage({
         type: "Error",
         content: "Failed to process content with AI: " + error.message
+      });
+    }
+  }else if(messagee.message === "gen_mcq"){
+    console.log("Generating MCQs for content:", messagee.conttent);
+    const mcq_prompt = `
+      Based on the following content, generate ${messagee.no_of_questions} multiple-choice questions (MCQs) with 4 options each and indicate the correct answer in json format with correct option number as "crt_op_no".
+      Content:
+      ${messagee.conttent}
+    `;
+    try {
+      const session = await LanguageModel.create({
+        systemPrompt: "You are a helpful assistant that generates multiple-choice questions (MCQs) from given content."
+      });
+      const mcqContent = await session.prompt(mcq_prompt);
+      
+      browser.runtime.sendMessage({
+        type: "MCQContent",
+        content: mcqContent
+      });
+      console.log('Generated MCQs:', mcqContent);
+    } catch (error) {
+      console.error('AI Prompt API Error:', error);
+      browser.runtime.sendMessage({
+        type: "Error",
+        content: "Failed to generate MCQs with AI: " + error.message
       });
     }
   }
